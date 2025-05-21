@@ -2,59 +2,50 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>goki-chat</title>
     <style>
         /* Genel Stiller */
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: rgb(26 31 44);
             font-family: sans-serif;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 16px;
-            background: transparent;
-        }
-
-        /* Tipografi */
-        h1 {
-            font-size: 24px;
-            color: oklch(86.9% 0.022 252.894);
-            padding: 0;
-            margin: 0;
-        }
-
-        p {
-            margin: 8px 0;
-            color: #555;
-            font-size: 14px;
         }
 
         /* Atomik CSS Sınıfları */
         .w-full { width: 100%; }
+        .w-inherit { width: inherit; }
+        .w-48 { width: 48px; }
+        .w-40 { width: 40px; }
         .h-40 { height: 40px; }
+        .h-10 { height: 10px; }
+        .w-10 { width: 10px; }
+        .h-100 { height: 100%; }
+        .h-100vh { height: 100vh; }
+        .flex-1 { flex: 1; }
         .min-h-40 { min-height: 40px; }
         .max-w-80 { max-width: 80%; }
+        .max-w-90 { max-width: 90%; }
+        .max-w-100 { max-width: 100%; }
         .max-w-300 { max-width: 300px; }
+        .max-w-1200 { max-width: 1200px; }
 
         .m-0 { margin: 0; }
         .m-auto { margin: auto; }
+        .m-0-auto { margin: 0 auto; }
+        .mb-0 { margin-bottom: 0; }
         .mb-8 { margin-bottom: 8px; }
+        .mb-10 { margin-bottom: 10px; }
         .mb-20 { margin-bottom: 20px; }
         .mt-0 { margin-top: 0; }
         .mt-4 { margin-top: 4px; }
+        .mt-auto { margin-top: auto; }
         .mt-n4 { margin-top: -4px; }
         .mr-6 { margin-right: 6px; }
 
         .p-0 { padding: 0; }
+        .p-4 { padding: 4px; }
         .p-5 { padding: 5px; }
+        .p-6-10 { padding: 6px 10px; }
+        .p-10-12 { padding: 10px 12px; }
         .p-8 { padding: 8px; }
         .p-16 { padding: 16px; }
         .pb-5 { padding-bottom: 5px; }
@@ -66,24 +57,28 @@
 
         .flex-col { flex-direction: column; }
         .flex-row { flex-direction: row; }
+        .flex-wrap { flex-wrap: wrap; }
         .items-center { align-items: center; }
         .justify-center { justify-content: center; }
         .justify-between { justify-content: space-between; }
         .self-start { align-self: flex-start; }
         .self-end { align-self: flex-end; }
 
+        .gap-4 { gap: 4px; }
         .gap-8 { gap: 8px; }
 
         .text-sm { font-size: 14px; }
         .text-xs { font-size: 10px; }
         .text-base { font-size: 16px; }
         .text-xl { font-size: 24px; }
+        .text-20 { font-size: 20px; }
         .text-right { text-align: right; }
         .text-light { color: oklch(86.9% 0.022 252.894); }
         .text-gray { color: rgb(156, 163, 175); }
         .text-error { color: #d00; }
         .text-blue { color: #007bff; }
         .text-blue-dark:hover { color: #0056b3; }
+        .text-white { color: #fff; }
 
         .bg-transparent { background: transparent; }
         .bg-dark { background: rgb(26 31 44); }
@@ -91,184 +86,92 @@
         .bg-input { background: rgb(34 39 51); }
         .bg-primary { background: #603394; }
         .bg-primary-dark:hover { background: #491d7c; }
+        .bg-none { background: none; }
 
         .border-none { border: none; }
-        .border-0 { border: 0; }
         .border-radius-4 { border-radius: 4px; }
         .border-radius-8 { border-radius: 8px; }
         .border-radius-12 { border-radius: 12px; }
         .border-radius-full { border-radius: 50%; }
         .border-top { border-top: 1px solid #ffffff1a; }
         .border-bottom { border-bottom: 1px solid #ffffff1a; }
+        .border-underline { text-decoration: underline; }
 
         .outline-none { outline: none; }
+        .outline-color-blue { outline-color: rgb(84 105 212 / 0.5); }
         .cursor-pointer { cursor: pointer; }
 
         .relative { position: relative; }
         .absolute { position: absolute; }
+        .sticky { position: sticky; }
         .top-0 { top: 0; }
         .right-0 { right: 0; }
+        .bottom-0 { bottom: 0; }
 
+        .overflow-hidden { overflow: hidden; }
         .overflow-y-auto { overflow-y: auto; }
         .word-wrap { word-wrap: break-word; }
         .word-break-all { word-break: break-all; }
         .text-wrap-pretty { text-wrap: pretty; }
         .vertical-middle { vertical-align: middle; }
+        .box-border { box-sizing: border-box; }
+        .resize-none { resize: none; }
 
-        /* Form Elemanları */
-        input#name-input {
-            font-size: 16px;
-            background: rgb(26 31 44);
-            color: oklch(86.9% 0.022 252.894);
-            padding: 8px;
-            width: inherit;
-            border-radius: 4px;
-            border: none;
-            outline-color: rgb(84 105 212 / 0.5);
-        }
+        /* Media Queries */
+        @media (max-width: 480px) {
+            .max-w-80 {
+                max-width: 90%;
+            }
 
-        textarea {
-            font-size: 16px;
-            padding: 8px;
-            border: 0;
-            outline: none;
-            width: inherit;
-            background: transparent;
-            min-height: 40px;
-            color: oklch(86.9% 0.022 252.894);
-        }
+            .container {
+                padding: 8px;
+            }
 
-        button {
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+            #messages {
+                padding: 4px;
+            }
 
-        button.primary {
-            width: 100%;
-            background: #603394;
-            color: #fff;
-            height: 40px;
-        }
+            #message-input {
+                padding: 4px;
+            }
 
-        button.primary:hover {
-            background: #491d7c;
-        }
+            #message-form button {
+                width: 40px;
+                height: 100%;
+            }
 
-        /* Mesaj Bölümü */
-        #messages {
-            height: 80%;
-            max-height: 500px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 8px;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            border-top: 1px solid #ffffff1a;
-            border-bottom: 1px solid #ffffff1a;
-        }
+            h1 {
+                font-size: 20px;
+            }
 
-        .bubble {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 12px;
-            background: rgba(42 47 63);
-            color: oklch(86.9% 0.022 252.894);
-            position: relative;
-            word-break: break-all;
-            text-wrap: pretty;
-        }
-
-        .username-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-
-        .timestamp {
-            display: block;
-            font-size: 10px;
-            color: rgb(156, 163, 175);
-            margin-top: 4px;
-            text-align: right;
-        }
-
-        /* Form ve Giriş Bölümleri */
-        #message-form {
-            display: flex;
-            margin-bottom: 8px;
-        }
-
-        #message-form button {
-            width: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #login-section {
-            display: flex;
-            flex-direction: column;
-            padding: 16px;
-            gap: 8px;
-            max-width: 300px;
-            margin: auto;
-            background: rgb(34 39 51);
-            border-radius: 8px;
-        }
-
-        #logout-btn {
-            background: none;
-            border: none;
-            color: #007bff;
-            text-decoration: underline;
-            cursor: pointer;
-            padding: 0;
-            font-size: 14px;
-        }
-
-        #logout-btn:hover {
-            color: #0056b3;
-        }
-
-        /* Özel Bileşenler */
-        .send-message {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            padding: 8px;
-            background: rgb(34 39 51);
+            #chat-section > div:first-child {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
         }
     </style>
 </head>
-<body>
-<div class="container">
-    <section id="login-section" class="flex flex-col p-16 gap-8 max-w-300 m-auto bg-input border-radius-8">
+<body class="flex flex-col h-100vh m-0 bg-dark overflow-hidden">
+<div class="container w-full max-w-1200 p-16 bg-transparent m-0-auto flex flex-col h-100 box-border">
+    <section id="login-section" class="flex flex-col p-16 gap-8 max-w-300 m-auto bg-input border-radius-8 box-border">
         <h1 class="text-xl text-light m-0 p-0">Sohbete Katıl</h1>
-        <p class="text-sm">Sohbet odasına katılmak için lütfen adınızı girin.</p>
+        <p class="text-sm" style="color: #555; margin: 8px 0;">Sohbet odasına katılmak için lütfen adınızı girin.</p>
         <form id="login-form">
             <div class="flex flex-col gap-8">
-                <input id="name-input" type="text" required placeholder="İsminiz">
-                <button type="submit" class="primary">Giriş Yap</button>
+                <input id="name-input" type="text" required placeholder="İsminiz" class="text-base bg-dark text-light p-8 w-inherit border-radius-4 border-none outline-color-blue">
+                <button type="submit" class="w-full bg-primary text-white h-40 border-none border-radius-4 text-base cursor-pointer">Giriş Yap</button>
                 <p id="login-error" class="text-error text-sm mt-n4"></p>
             </div>
         </form>
         <strong class="text-light">Not:</strong>
-        <p class="text-sm">Düsuk internet bağlantısı nedeniyle mesajlarınız geç görünebilir.Sadece belirli insanlarin iletiimi icin kullnima aciktir.</p>
+        <p class="text-sm" style="color: #555; margin: 8px 0;">Düşük internet bağlantısı nedeniyle mesajlarınız geç görünebilir. Sadece belirli insanların iletişimi için kullanıma açıktır.</p>
     </section>
-    <section id="chat-section" class="hidden">
+    <section id="chat-section" class="hidden flex flex-col h-100 overflow-hidden">
         <div class="flex flex-row justify-between items-center pb-5">
             <h1 class="text-xl text-light m-0 p-0">Sohbet Odası</h1>
             <div class="flex flex-row items-center gap-8">
-                <p class="text-sm">Hoş geldin <strong id="current-user"></strong></p>
-                <button id="logout-btn" class="border-none bg-transparent text-blue cursor-pointer p-0 text-sm">
+                <p class="text-sm" style="color: #555; margin: 8px 0;">Hoş geldin <strong id="current-user"></strong></p>
+                <button id="logout-btn" class="border-none bg-none text-blue border-underline cursor-pointer p-0 text-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                         <polyline points="16 17 21 12 16 7"/>
@@ -277,11 +180,11 @@
                 </button>
             </div>
         </div>
-        <div id="messages" class="border-top border-bottom mb-20 overflow-y-auto"></div>
-        <form id="message-form" class="flex mb-8">
-            <div class="relative w-full flex p-5 send-message">
-                <textarea id="message-input" placeholder="Mesajınız…" required rows="1" class="text-base p-8 border-0 outline-none w-full bg-transparent min-h-40 text-light"></textarea>
-                <button type="submit" class="absolute top-0 right-0 bg-transparent" aria-label="Gönder">
+        <div id="messages" class="flex-1 overflow-y-auto p-8 bg-transparent flex flex-col border-top border-bottom mb-20"></div>
+        <form id="message-form" class="flex mt-auto mb-0 sticky bottom-0 bg-dark">
+            <div class="flex items-center w-full border-radius-4 p-8 bg-input box-border relative">
+                <textarea id="message-input" placeholder="Mesajınız…" required rows="1" class="text-base p-8 border-none outline-none w-full bg-transparent min-h-40 text-light resize-none"></textarea>
+                <button type="submit" class="absolute top-0 right-0 border-none bg-transparent w-48 h-100 flex items-center justify-center cursor-pointer" aria-label="Gönder">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lov-name="Send">
                         <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
                         <path d="m21.854 2.147-10.94 10.939"></path>
@@ -292,15 +195,19 @@
     </section>
 </div>
 
-<script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
+<script>
+    // Minimal Supabase REST + Realtime via WebSocket
     const LOGIN_KEY = 'chat_username';
-    const SUPABASE_URL = 'SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY';
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const API_URL =  'SUPABASE_URL';
+    const API_KEY = 'SUPABASE_ANON_KEY';
+    const AUTH_HDR = {
+        apikey: API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+    };
+    const POLL_INTERVAL = 3000; // ms
 
-    let currentUser = null;
+    // DOM elements
     const loginSection = document.getElementById('login-section');
     const chatSection = document.getElementById('chat-section');
     const loginForm = document.getElementById('login-form');
@@ -312,7 +219,33 @@
     const logoutBtn = document.getElementById('logout-btn');
     const currentUserDisplay = document.getElementById('current-user');
 
+    // App state
+    let currentUser = null;
+    let lastTimestamp = null;
     const userColors = {};
+
+    // Utility functions
+    async function apiCall(endpoint, options = {}) {
+        const defaultOptions = { headers: AUTH_HDR };
+        const fetchOptions = { ...defaultOptions, ...options };
+
+        if (options.body) {
+            fetchOptions.headers = {
+                ...fetchOptions.headers,
+                'Prefer': 'return=representation'
+            };
+        }
+
+        const response = await fetch(`${API_URL}${endpoint}`, fetchOptions);
+        return response.json();
+    }
+
+    async function checkUserAllowed(name) {
+        const encodedName = encodeURIComponent(name.toLowerCase());
+        const data = await apiCall(`/rest/v1/allowed_users?select=name&name=eq.${encodedName}`);
+        return data.length > 0;
+    }
+
     function getUserColor(name) {
         const key = name.toLowerCase();
         if (!userColors[key]) {
@@ -321,48 +254,133 @@
         return userColors[key];
     }
 
-    // Kayıtlı kullanıcıyı kontrol et
+    // Helper function to scroll to the bottom of the messages container
+    function scrollToBottom() {
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function renderMessage({ sender, content, inserted_at }, container = messagesDiv) {
+        const div = document.createElement('div');
+        const isCurrent = sender === currentUser;
+        div.className = `max-w-80 mb-8 word-wrap flex ${isCurrent ? 'self-end' : 'self-start'}`;
+
+        const bubble = document.createElement('span');
+        bubble.className = 'p-10-12 max-w-100 box-border inline-block border-radius-12 bg-darker text-light relative word-break-all text-wrap-pretty';
+
+        const dot = document.createElement('span');
+        dot.className = 'h-10 w-10 inline-block border-radius-full mr-6 vertical-middle';
+        dot.style.backgroundColor = getUserColor(sender);
+
+        bubble.appendChild(dot);
+
+        const nameEl = document.createElement('strong');
+        nameEl.textContent = sender;
+        bubble.appendChild(nameEl);
+        bubble.appendChild(document.createElement('br'));
+        bubble.appendChild(document.createTextNode(content));
+
+        const time = document.createElement('span');
+        time.className = 'block text-xs text-gray mt-4 text-right';
+        time.textContent = new Date(inserted_at).toLocaleTimeString();
+        bubble.appendChild(time);
+
+        div.appendChild(bubble);
+
+        // If we're using a document fragment, add to it; otherwise add directly to messagesDiv
+        container.appendChild(div);
+
+        // Only scroll if we're adding directly to the messages container
+        if (container === messagesDiv) {
+            scrollToBottom();
+        }
+    }
+
+    function showChat() {
+        loginSection.classList.add('hidden');
+        chatSection.classList.remove('hidden');
+        currentUserDisplay.textContent = currentUser;
+        initChat();
+    }
+
+    // Chat functions
+    async function initChat() {
+        await loadHistory();
+        setInterval(checkNewMessages, POLL_INTERVAL);
+    }
+
+    async function loadHistory() {
+        const messages = await apiCall('/rest/v1/messages?select=*&order=inserted_at.asc');
+
+        if (messages.length) {
+            // Use document fragment for better performance when adding multiple messages
+            const fragment = document.createDocumentFragment();
+            messages.forEach(msg => renderMessage(msg, fragment));
+            messagesDiv.appendChild(fragment);
+
+            // Ensure we scroll to the bottom after loading history
+            scrollToBottom();
+
+            lastTimestamp = messages[messages.length - 1].inserted_at;
+        } else {
+            lastTimestamp = new Date().toISOString();
+        }
+    }
+
+    async function checkNewMessages() {
+        const encodedTimestamp = encodeURIComponent(lastTimestamp);
+        const newMessages = await apiCall(`/rest/v1/messages?select=*&order=inserted_at.asc&inserted_at=gt.${encodedTimestamp}`);
+
+        if (newMessages.length) {
+            // Use document fragment for better performance when adding multiple messages
+            const fragment = document.createDocumentFragment();
+            newMessages.forEach(msg => renderMessage(msg, fragment));
+            messagesDiv.appendChild(fragment);
+
+            // Ensure we scroll to the bottom when new messages arrive
+            scrollToBottom();
+
+            lastTimestamp = newMessages[newMessages.length - 1].inserted_at;
+        }
+    }
+
+    async function sendMessage(content) {
+        const newMsgs = await apiCall('/rest/v1/messages?select=sender,content,inserted_at', {
+            method: 'POST',
+            body: JSON.stringify({ sender: currentUser, content })
+        });
+
+        if (newMsgs.length) {
+            const newMsg = newMsgs[0];
+            renderMessage(newMsg);
+            lastTimestamp = newMsg.inserted_at;
+            // Ensure we scroll to the bottom after adding a new message
+            scrollToBottom();
+        }
+    }
+
+    // Event listeners and initialization
     (async () => {
         const stored = localStorage.getItem(LOGIN_KEY);
-        if (stored) {
-            console.log('Checking stored user:', stored);
-            const { data, error } = await supabase
-                .from('allowed_users')
-                .select('name')
-                .eq('name', stored.toLowerCase())
-                .single();
-            console.log('Stored user check result:', { data, error });
-            if (data && !error) {
-                currentUser = stored;
-                showChat();
-            } else {
-                localStorage.removeItem(LOGIN_KEY);
-                console.error('Stored user invalid:', error?.message || 'No data');
-            }
+        if (stored && await checkUserAllowed(stored)) {
+            currentUser = stored;
+            showChat();
+        } else {
+            localStorage.removeItem(LOGIN_KEY);
         }
     })();
 
     loginForm.addEventListener('submit', async e => {
         e.preventDefault();
         const name = nameInput.value.trim();
-        console.log('Attempting login with name:', name);
-        const { data, error } = await supabase
-            .from('allowed_users')
-            .select('name')
-            .eq('name', name.toLowerCase())
-            .single();
-        console.log('Login check result:', { data, error });
 
-        if (error || !data) {
+        if (await checkUserAllowed(name)) {
+            currentUser = name;
+            localStorage.setItem(LOGIN_KEY, name);
+            loginError.textContent = '';
+            showChat();
+        } else {
             loginError.textContent = 'Erişim reddedildi: İsim listede yok.';
-            console.error('Login failed:', error?.message || 'No data');
-            return;
         }
-
-        currentUser = name;
-        localStorage.setItem(LOGIN_KEY, name);
-        loginError.textContent = '';
-        showChat();
     });
 
     logoutBtn.addEventListener('click', () => {
@@ -370,89 +388,14 @@
         location.reload();
     });
 
-    function showChat() {
-        loginSection.classList.add('hidden');
-        chatSection.classList.remove('hidden');
-        currentUserDisplay.textContent = currentUser;
-        startListening();
-    }
-
-    async function startListening() {
-        console.log('Starting to listen for messages');
-        const { data: messages, error } = await supabase
-            .from('messages')
-            .select('*')
-            .order('inserted_at', { ascending: true });
-        console.log('Fetched messages:', { messages, error });
-        messages?.forEach(renderMessage);
-        await supabase
-            .channel('public:messages')
-            .on('postgres_changes', {event: 'INSERT', schema: 'public', table: 'messages'}, payload => {
-                console.log('New message received:', payload.new);
-                renderMessage(payload.new);
-            })
-            .subscribe();
-    }
-
-    function renderMessage({ sender, content, inserted_at }) {
-        const div = document.createElement('div');
-        const isCurrentUser = sender === currentUser;
-        div.className = `message mb-8 max-w-80 word-wrap flex ${isCurrentUser ? 'self-end' : 'self-start'}`;
-
-        const color = getUserColor(sender);
-        const bubble = document.createElement('span');
-        bubble.className = 'bubble inline-block border-radius-12 bg-darker text-light relative word-break-all text-wrap-pretty';
-
-        const dot = document.createElement('span');
-        dot.className = 'username-dot inline-block border-radius-full mr-6 vertical-middle';
-        dot.style.backgroundColor = color;
-
-        bubble.appendChild(dot);
-
-        const nameText = document.createElement('strong');
-        nameText.textContent = sender;
-        bubble.appendChild(nameText);
-        bubble.appendChild(document.createElement('br'));
-
-        const contentText = document.createTextNode(content);
-        bubble.appendChild(contentText);
-
-        const time = document.createElement('span');
-        time.className = 'timestamp block text-xs text-gray mt-4 text-right';
-        time.textContent = new Date(inserted_at).toLocaleTimeString();
-        bubble.appendChild(time);
-
-        div.appendChild(bubble);
-        messagesDiv.appendChild(div);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-
     messageForm.addEventListener('submit', async e => {
         e.preventDefault();
         const content = messageInput.value.trim();
         if (!content) return;
 
-        console.log('Sending message:', { sender: currentUser, content });
-        const { data, error } = await supabase
-            .from('messages')
-            .insert({ sender: currentUser, content })
-            .select()
-            .single();
-        console.log('Message send result:', { data, error });
-
-        if (error) {
-            loginError.textContent = 'Hata: Mesaj gönderilemedi. Geçerli bir kullanıcı adı kullanın.';
-            console.error('Message send failed:', error.message);
-            return;
-        }
-
-        if (data) {
-            renderMessage(data);
-        }
+        await sendMessage(content);
         messageInput.value = '';
     });
 </script>
 </body>
 </html>
-
-
